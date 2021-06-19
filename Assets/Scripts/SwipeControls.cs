@@ -7,7 +7,7 @@ public class SwipeControls : MonoBehaviour
 {
     Vector2 swipeStart;
     Vector2 swipeEnd;
-    float minSwipeDistance;
+    float minSwipeDistance = .5f;
 
     public static event System.Action<SwipeDirection> OnSwipe = delegate {};
 

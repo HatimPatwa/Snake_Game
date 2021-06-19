@@ -53,6 +53,7 @@ public class SnakeHead :BodyPart
             newPart.following = this;
             tail = newPart;
             tail.TurnIntoTail();
+            
         }
         else
         {
@@ -64,9 +65,10 @@ public class SnakeHead :BodyPart
             newPart.TurnIntoTail();
             tail.TurnIntoBodyPart();
             tail = newPart;
-            
-            
-            
+
+
+
+
         }
     }
 

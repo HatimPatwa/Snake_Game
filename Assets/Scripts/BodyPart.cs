@@ -10,7 +10,7 @@ public class BodyPart : MonoBehaviour
 
     private bool isTail = false;
 
-    private SpriteRenderer spriteRenderer = null;
+    private  SpriteRenderer spriteRenderer;
 
     const int PARTSREMEMBERED = 10;
 
