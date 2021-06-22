@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -21,43 +21,139 @@ public class GameController : MonoBehaviour
     public Sprite bodySprite;
 
     public SnakeHead snakeHead = null ;
+
+    public bool alive = false;
+
+    public bool waitingForPlayer = true;
+
+    List<Egg> eggs = new List<Egg>();
+
+    int noOFEggsTOLevelUp = 0;
+    int level = 0;
+
+    public int score = 0;
+    public int hiScore = 0;
+
+    public Text scoreText;
+    public Text hiScoreText;
+
+    public Text gameOverText;
+    public Text tapToPlayText;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        
         instance = this;
         CreateWalls();
-        StartGame();
-        CreatEgg();
+        alive = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (waitingForPlayer == true)
+        {
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    StartGamePlay();
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                StartGamePlay();
+            }
+        }
+    }
+
+
+    void LevelUp()
+    {
+        
+        level++;
+        noOFEggsTOLevelUp = 4 + (level * 2);
+        snakeSpeed = 1f + (level / 4f);
+        if (snakeSpeed > 6) snakeSpeed = 6;
+
+        snakeHead.ResetSnake();
+
+        CreateEgg();
+    }
+    public void GameOver()
+    {   
+        alive = false;
+        waitingForPlayer = true;
+
+        gameOverText.gameObject.SetActive(true);
+        tapToPlayText.gameObject.SetActive(true);
+    }
+
+
+    private void StartGamePlay()
+    {
+        score = 0;
+        level = 0;
+
+        DestroyOldEggs();
+        LevelUp();
+
+        gameOverText.gameObject.SetActive(false);
+        tapToPlayText.gameObject.SetActive(false);
+        waitingForPlayer = false;
+        alive = true;
         
     }
 
-    void StartGame()
+    public void EggEaten(Egg egg)
     {
-        snakeHead.ResetSnake();
-    }
+        score++;
+        scoreText.text = "Score = " + score;
 
+        noOFEggsTOLevelUp--;
+        if (noOFEggsTOLevelUp == 0)
+        {
+            score += 10;
+            LevelUp();
+        }
+
+        else if (noOFEggsTOLevelUp == 1) // last egg
+        {
+            CreateEgg(true);
+        }
+        else
+            CreateEgg(false);
+
+        if (score > hiScore)
+        {
+            hiScore = score;
+            hiScoreText.text = "High Score = " + hiScore;
+        }
+
+        eggs.Remove(egg);
+        Destroy(egg.gameObject);
+    }
     void CreateWalls()
     {
+        float z = -1f;
 
-        Vector3 start = new Vector3(-WIDTH, -HEIGHT, 0);    // LEFT
-        Vector3 finish = new Vector3(-WIDTH, +HEIGHT, 0);
+        Vector3 start = new Vector3(-WIDTH, -HEIGHT, z);    // LEFT
+        Vector3 finish = new Vector3(-WIDTH, +HEIGHT, z);
         CreateWall(start, finish);
 
-        start = new Vector3(+WIDTH, -HEIGHT, 0);            // RIGHT
-        finish = new Vector3(+WIDTH, +HEIGHT, 0);
+        start = new Vector3(+WIDTH, -HEIGHT, z);            // RIGHT
+        finish = new Vector3(+WIDTH, +HEIGHT, z);
         CreateWall(start, finish);
 
-        start = new Vector3(-WIDTH, -HEIGHT, 0);            //BOTTOM
-        finish = new Vector3(+WIDTH, -HEIGHT, 0);
+        start = new Vector3(-WIDTH, -HEIGHT, z);            //BOTTOM
+        finish = new Vector3(+WIDTH, -HEIGHT, z);
         CreateWall(start, finish);
 
-        start = new Vector3(-WIDTH, +HEIGHT, 0);            //TOP
-        finish = new Vector3(+WIDTH, +HEIGHT, 0);
+        start = new Vector3(-WIDTH, +HEIGHT, z);            //TOP
+        finish = new Vector3(+WIDTH, +HEIGHT, z);
         CreateWall(start, finish);
     }
 
@@ -85,21 +181,33 @@ public class GameController : MonoBehaviour
 
     }
 
-    void CreatEgg(bool golden = false)
+    void CreateEgg(bool golden = false)
     {
         Vector3 position;
         position.x = -WIDTH + Random.Range(1f, (WIDTH * 2f) - 2f);
         position.y = -HEIGHT+ Random.Range(1f, (HEIGHT * 2f) - 2f);
-        position.z = 0;
+        position.z = -1f;
+        Egg egg = null;
 
         if (golden)
         {
-            Instantiate(goldenEggPrefab, position, Quaternion.identity);
+           egg =  Instantiate(goldenEggPrefab, position, Quaternion.identity).GetComponent<Egg>();
         }
         else
         {
-            Instantiate(eggPrefab, position, Quaternion.identity);
+            egg = Instantiate(eggPrefab, position, Quaternion.identity).GetComponent<Egg>();
         }
+
+        eggs.Add(egg);
        
+    }
+
+   private void DestroyOldEggs()
+    {
+        foreach (Egg egg in eggs)
+        {
+            Destroy(egg.gameObject);
+        }
+        eggs.Clear();
     }
 }

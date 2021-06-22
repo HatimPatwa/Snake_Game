@@ -8,7 +8,7 @@ public class BodyPart : MonoBehaviour
 
     public BodyPart following = null;
 
-    private bool isTail = false;
+
 
     private  SpriteRenderer spriteRenderer;
 
@@ -19,15 +19,26 @@ public class BodyPart : MonoBehaviour
     public int setIndex = 0;
     public int getIndex = -(PARTSREMEMBERED - 1);
 
+    public void ResetMemory()
+    {
+        setIndex = 0;
+        getIndex = -(PARTSREMEMBERED - 1);
+    }
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        
     }
 
     // Update is called once per frame
     virtual public void Update()
     {
+        if (!GameController.instance.alive) return;
         Vector3 followPosition;
         if (following!=null)
         {
@@ -99,12 +110,12 @@ public class BodyPart : MonoBehaviour
 
     public void TurnIntoTail()
     {
-        isTail = true;
+
         spriteRenderer.sprite = GameController.instance.tailSprite;
     }
     public void TurnIntoBodyPart()
     {
-        isTail = false;
+  
         spriteRenderer.sprite = GameController.instance.bodySprite;
     }
 
