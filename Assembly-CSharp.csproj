@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Egg.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\SnakeHead.cs" />
+    <Compile Include="Assets\Scripts\Spike.cs" />
     <Compile Include="Assets\Scripts\SwipeControls.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

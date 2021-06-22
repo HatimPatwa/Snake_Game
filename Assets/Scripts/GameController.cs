@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     public GameObject rockPrefab = null;
     public GameObject eggPrefab = null;
     public GameObject goldenEggPrefab = null;
+    public GameObject spikePrefab = null;
 
     public Sprite tailSprite;
     public Sprite bodySprite;
@@ -27,6 +28,9 @@ public class GameController : MonoBehaviour
     public bool waitingForPlayer = true;
 
     List<Egg> eggs = new List<Egg>();
+    List<Spike> spikes = new List<Spike>();
+
+    int noOfSpikesToGenerate = 0;
 
     int noOFEggsTOLevelUp = 0;
     int level = 0;
@@ -75,6 +79,8 @@ public class GameController : MonoBehaviour
     {
         
         level++;
+        noOfSpikesToGenerate = level;
+
         noOFEggsTOLevelUp = 4 + (level * 2);
         snakeSpeed = 1f + (level / 4f);
         if (snakeSpeed > 6) snakeSpeed = 6;
@@ -82,6 +88,14 @@ public class GameController : MonoBehaviour
         snakeHead.ResetSnake();
 
         CreateEgg();
+
+        DestroyOldSpikes();
+        while (noOfSpikesToGenerate != 0)
+        {
+            CreateSpike();
+            noOfSpikesToGenerate--;
+        }
+        
     }
     public void GameOver()
     {   
@@ -98,14 +112,18 @@ public class GameController : MonoBehaviour
         score = 0;
         level = 0;
 
+        DestroyOldSpikes();
         DestroyOldEggs();
+        
         LevelUp();
 
         gameOverText.gameObject.SetActive(false);
         tapToPlayText.gameObject.SetActive(false);
         waitingForPlayer = false;
         alive = true;
-        
+
+       
+
     }
 
     public void EggEaten(Egg egg)
@@ -180,13 +198,16 @@ public class GameController : MonoBehaviour
         rock.transform.localScale = new Vector3(scale, scale, 1);
 
     }
+    void CreateSpike()
+    {
+        Vector3 position = RandomPosition();
+        Spike spike = Instantiate(spikePrefab, position, Quaternion.identity).GetComponent<Spike>();
+        spikes.Add(spike);
+    }
 
     void CreateEgg(bool golden = false)
     {
-        Vector3 position;
-        position.x = -WIDTH + Random.Range(1f, (WIDTH * 2f) - 2f);
-        position.y = -HEIGHT+ Random.Range(1f, (HEIGHT * 2f) - 2f);
-        position.z = -1f;
+        Vector3 position = RandomPosition();
         Egg egg = null;
 
         if (golden)
@@ -202,12 +223,29 @@ public class GameController : MonoBehaviour
        
     }
 
-   private void DestroyOldEggs()
+    void DestroyOldEggs()
     {
         foreach (Egg egg in eggs)
         {
             Destroy(egg.gameObject);
         }
         eggs.Clear();
+    }
+
+    void DestroyOldSpikes()
+    {
+        foreach (Spike spike in spikes)
+        {
+            Destroy(spike.gameObject);
+        }
+        spikes.Clear();
+    }
+    Vector3 RandomPosition()
+    {
+        Vector3 position;
+        position.x = -WIDTH + Random.Range(1f, (WIDTH * 2f) - 2f);
+        position.y = -HEIGHT + Random.Range(1f, (HEIGHT * 2f) - 2f);
+        position.z = -1f;
+        return position;
     }
 }

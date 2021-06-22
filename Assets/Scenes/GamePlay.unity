@@ -257,7 +257,7 @@ BoxCollider2D:
   m_Offset: {x: 0.000000014901161, y: 0.2753188}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.49999994, y: 0.34341088}
+    pivot: {x: 0.50322986, y: 0.30542636}
     oldSize: {x: 0.42, y: 0.5}
     newSize: {x: 0.42, y: 0.5}
     adaptiveTilingThreshold: 0.5
@@ -1308,6 +1308,7 @@ RectTransform:
   - {fileID: 1844263518}
   - {fileID: 1123237163}
   - {fileID: 1642272583}
+  - {fileID: 2018176121}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1316,6 +1317,84 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &2018176120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2018176121}
+  - component: {fileID: 2018176123}
+  - component: {fileID: 2018176122}
+  m_Layer: 5
+  m_Name: AssignmentText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2018176121
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018176120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1959225728}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000022888, y: -848.6}
+  m_SizeDelta: {x: 425.24158, y: 33.121414}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2018176122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018176120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.23113209, g: 0.30075708, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 28
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 101
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Assignment By :- Hatim Patwa
+--- !u!222 &2018176123
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018176120}
+  m_CullTransparentMesh: 0
 --- !u!1 &2079787637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,6 +1447,8 @@ MonoBehaviour:
   eggPrefab: {fileID: 6038701891890969194, guid: e7675942d3b0bc34293967f94a81e4d9,
     type: 3}
   goldenEggPrefab: {fileID: 661330330051969611, guid: d251cce3be656e04bb22dbc8af2038de,
+    type: 3}
+  spikePrefab: {fileID: 2495771037717043366, guid: 8cebddbcfd4c2ae4683612086d2f92ad,
     type: 3}
   tailSprite: {fileID: 21300000, guid: f76ab8141a2957043a55e1d3ff1ca288, type: 3}
   bodySprite: {fileID: 21300000, guid: 3c7fe79b189b8d243a6e1a60d885f1c1, type: 3}
